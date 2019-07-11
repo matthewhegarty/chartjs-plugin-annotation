@@ -47,7 +47,9 @@ function buildTask() {
     .pipe(streamify(replace('{{ version }}', package.version)))
     .pipe(gulp.dest(outDir))
     .pipe(streamify(uglify({
-      preserveComments: 'some'
+      output: {
+          comments: 'some'
+      }
     })))
     .pipe(streamify(concat('chartjs-plugin-annotation.min.js')))
     .pipe(gulp.dest(outDir));
@@ -80,7 +82,7 @@ function bumpTask(complete) {
 
     // Write these to their own files, then build the output
     fs.writeFileSync('package.json', JSON.stringify(package, null, 2));
-    
+
     complete();
   });
 }
